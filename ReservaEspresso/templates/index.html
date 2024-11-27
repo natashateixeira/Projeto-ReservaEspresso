@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva Espresso</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'reservas:index' %}">Home</a></li>
+            {% if user.is_authenticated %}
+                <li>Olá, {{ user.username }}!</li>
+                <li><a href="{% url 'reservas:reserva' %}">Reservar</a></li>
+                <li>
+                    <form action="{% url 'reservas:logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Sair</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'reservas:registrar' %}">Cadastrar</a></li>
+                <li><a href="{% url 'reservas:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div>
+        <h1>Bem-vindo ao Reserva Espresso!</h1>
+        <h2>Reservas antecipadas disponíveis agora em nosso restaurante!</h2>
+
+        {% if user.is_authenticated %}
+            <h2>Bem-vindo, {{ user.username }}!</h2>
+            <p>Você está logado. Deseja fazer uma <a href="{% url 'reservas:reserva' %}">reserva</a>?</p>
+            <form action="{% url 'reservas:logout' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Sair</button>
+            </form>
+        {% else %}
+            <h2>Bem-vindo ao nosso site!</h2>
+            <p>Faça login ou <a href="{% url 'reservas:registrar' %}">cadastre-se</a> para fazer uma reserva.</p>
+        {% endif %}
+
+        <h2>Benefícios</h2>
+
+        <h3>Garantia de disponibilidade</h3>
+        <p>Reservar com antecedência assegura que você consiga a mesa no dia e horário desejado, evitando a frustração de não encontrar disponibilidade, especialmente em horários de pico ou datas especiais.</p>
+
+        <h3>Evite filas de espera</h3>
+        <p>Reservando com antecedência, você evita longas esperas, especialmente durante os períodos de maior movimento, como fins de semana, feriados ou eventos especiais.</p>
+
+        <h3>Melhor escolha de mesa</h3>
+        <p>Ao fazer uma reserva antecipada, você tem a chance de escolher a melhor mesa disponível, seja ela com uma vista, mais privada ou em uma área preferida do restaurante.</p>
+
+        <h3>Planejamento de grupo</h3>
+        <p>Para grandes grupos, fazer a reserva antecipada garante que o restaurante possa organizar adequadamente o espaço para acomodar todos confortavelmente, evitando surpresas de última hora.</p>
+
+        <h3>Facilidade e segurança</h3>
+        <p>A reserva online permite que você realize todo o processo de forma rápida e sem sair de casa. Não é necessário ligar ou ir até o local, economizando tempo e tornando a experiência mais prática. Em períodos de alta demanda, como festas de fim de ano ou feriados, a reserva antecipada é fundamental para garantir sua mesa no restaurante.</p>
+
+        {% if not user.is_authenticated %}
+            <p><strong>Faça login ou cadastre-se já!</strong></p>
+            <ul>
+                <li><a href="{% url 'reservas:registrar' %}">Cadastrar</a></li>
+                <li><a href="{% url 'reservas:login' %}">Login</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

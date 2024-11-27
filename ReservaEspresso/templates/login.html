@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva Espresso</title>
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("id_password");
+            var checkbox = document.getElementById("showPassword");
+            passwordField.type = checkbox.checked ? "text" : "password";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'reservas:index' %}">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Login</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="id_email">Email</label>
+        <input type="email" name="email" id="id_email" required>
+
+        <label for="id_password">Senha</label>
+        <input type="password" name="password" id="id_password" required>
+
+        <div>
+            <input type="checkbox" id="showPassword" onclick="togglePassword()"> 
+            <label for="showPassword">Mostrar Senha</label>
+        </div>
+
+        <button type="submit">Entrar</button>
+    </form>
+
+    <p>Não tem cadastro? <a href="{% url 'reservas:registrar' %}">Cadastre-se aqui</a></p>
+</body>
+</html>
